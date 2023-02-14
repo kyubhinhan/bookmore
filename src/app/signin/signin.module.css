@@ -1,0 +1,12 @@
+.Container {
+  height: 100vh;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginButton {
+  width: 100px;
+  height: 100px;
+}
