@@ -1,18 +1,18 @@
-import './globals.css'
+import "./reset.css";
+import "./global.css";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
-      <body>{children}</body>
+      <body>
+        <header>레이아웃 테스트요</header>
+        {children}
+      </body>
     </html>
-  )
+  );
 }
