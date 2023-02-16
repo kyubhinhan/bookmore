@@ -4,15 +4,11 @@ import React from "react";
 import styles from "./signin.module.css";
 
 const page = () => {
-  const handleLoginButtonClick = () => {
-    console.log("hi");
-  };
-
   return (
     <div className={styles.Container}>
-      <button className={styles.LoginButton} onClick={handleLoginButtonClick}>
-        카카오 로그인
-      </button>
+      <form method="POST" action="/api/signincheck">
+        <button type="submit">카카오 로그인</button>
+      </form>
     </div>
   );
 };
