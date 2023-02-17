@@ -17,7 +17,6 @@ model User {
   profileImage String?
   reviews BookReview[]
   likes Like[]
-  @@map(name: "users")
 }
 
 model BookReview {
@@ -28,7 +27,6 @@ model BookReview {
   writer    User   @relation(fields: [writerId], references: [id])
   writerId  String
   likes Like[]
-  @@map(name:"book-review")
 }
 
 model Like {
@@ -37,5 +35,4 @@ model Like {
   userId String
   bookReview BookReview @relation(fields: [bookReviewId],references: [id])
   bookReviewId String
-  @@map(name: "like")
 }

@@ -1,17 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import prisma from "lib/prisma";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { code } = req.query;
-  let err;
 
   if (code) {
     const url = "https://kauth.kakao.com/oauth/token";
     try {
-      // 토큰 받기
+      // 카카오 토큰 받기
       const { data } = await axios.post(url, null, {
         params: {
           grant_type: "authorization_code",
@@ -26,18 +26,40 @@ export default async function handler(
       const { access_token, refresh_token } = data;
 
       // 사용자 정보 조회하기(이메일이랑 프로필 이미지 검색)
-      const res = await axios.post("https://kapi.kakao.com/v2/user/me", null, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          "Content-Type": "application/x-www-form-urlencoded",
+      const infoResult = await axios.post(
+        "https://kapi.kakao.com/v2/user/me",
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      const email = infoResult.data.kakao_account.email;
+      const profileImage = infoResult.data.properties.profile_image;
+
+      // 이메일을 사용하여 서비스에 등록된 사용자인지 확인
+      const result = await prisma.user.findUnique({
+        where: {
+          email,
         },
       });
-      const email = res.data.kakao_account.email;
-      const profileImage = res.data.properties.profile_image;
-    } catch (logerr) {
-      err = logerr;
-    }
-  }
 
-  res.status(200).json({ err });
+      // 서비스에 등록되지 않은 사용자일 때
+      // email을 queryparam으로 signup 페이지로 redirect 시켜줌
+      if (result == null) {
+        const redirectUrl = `http://localhost:3000/signup?email=${email}`;
+        res.redirect(307, redirectUrl);
+      }
+
+      // 서비스에 등록된 사용자일 때
+      // accesstoken과 refreshtoken을 발급해줌
+      res.status(200).json({ type: "회원가입이 되어 있습니다." });
+    } catch (logerr) {
+      res.status(200).json({ error: logerr });
+    }
+  } else {
+    res.status(200).json({ error: "code가 없습니다." });
+  }
 }
