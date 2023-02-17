@@ -48,8 +48,9 @@ export default async function handler(
 
       // 서비스에 등록되지 않은 사용자일 때
       // email을 queryparam으로 signup 페이지로 redirect 시켜줌
+      // profile image 또한 query param으로 넘겨줌
       if (result == null) {
-        const redirectUrl = `http://localhost:3000/signup?email=${email}`;
+        const redirectUrl = `http://localhost:3000/signup?email=${email}&profileImage=${profileImage}`;
         res.redirect(307, redirectUrl);
       }
 
