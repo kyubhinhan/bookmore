@@ -35,9 +35,9 @@ const Page = () => {
     e.preventDefault();
 
     const targetData = new FormData();
+    targetData.append("profileImage", imageFile as File);
     targetData.append("email", String(email));
     targetData.append("nickname", String(nickname));
-    targetData.append("profileImage", imageFile as File);
 
     // 전송
     const url = "http://localhost:3000/api/signup";
