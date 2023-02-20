@@ -38,6 +38,9 @@ const Page = () => {
     targetData.append("profileImage", imageFile as File);
     targetData.append("email", String(email));
     targetData.append("nickname", String(nickname));
+    if (!imageFile) {
+      targetData.append("profileImageUrl", String(profileImage));
+    }
 
     // 전송
     const url = "http://localhost:3000/api/signup";
