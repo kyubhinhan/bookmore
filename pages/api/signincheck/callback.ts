@@ -52,11 +52,15 @@ export default async function handler(
       if (result == null) {
         const redirectUrl = `http://localhost:3000/signup?email=${email}&profileImage=${profileImage}`;
         res.redirect(307, redirectUrl);
+      } else {
+        // 서비스에 등록된 사용자일 때
+        // accesstoken과 refreshtoken를 발급해서 넘겨줌
+        const tokenUrl = "http://localhost:3000/api/token";
+        const data = await axios.post(tokenUrl, {
+          email,
+        });
+        res.status(200).json({ type: "회원가입이 되어 있습니다." });
       }
-
-      // 서비스에 등록된 사용자일 때
-      // accesstoken과 refreshtoken을 발급해줌
-      res.status(200).json({ type: "회원가입이 되어 있습니다." });
     } catch (logerr) {
       res.status(200).json({ error: logerr });
     }
