@@ -1,0 +1,24 @@
+.Container {
+  height: 100vh;
+  margin-top: -1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Container form {
+  width: 40rem;
+  height: 45rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.Title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}

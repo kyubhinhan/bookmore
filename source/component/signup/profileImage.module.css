@@ -1,0 +1,26 @@
+.Container {
+  width: calc(100% - 2rem);
+  padding: 1rem;
+}
+
+.Container label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 1rem;
+  width: 5rem;
+}
+
+.Container input {
+  font-size: 1rem;
+  margin-left: 3rem;
+}
+
+.ImageHolder {
+  width: 22rem;
+  height: 20rem;
+  position: relative;
+  margin-left: 12rem;
+  margin-top: 2rem;
+  border-radius: 2rem;
+  overflow: hidden;
+}
